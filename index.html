@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h2>Live Match</h2>
+  <pre id="output"></pre>
+
+<script>
+  const output = document.getElementById("output");
+  const es = new EventSource("http://localhost:8080/events?matchId=123");
+
+  es.onopen = () => {
+    console.log("SSE connected");
+  };
+
+  es.onerror = (err) => {
+    console.error("SSE error:", err);
+  };
+
+  es.onmessage = (event) => {
+  const data = JSON.parse(event.data);
+
+  output.innerText += JSON.stringify(data, null, 5) + "\n\n";
+};
+
+</script>
+
+</body>
+</html>
